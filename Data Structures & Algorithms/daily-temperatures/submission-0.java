@@ -1,0 +1,19 @@
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+
+        int[] result = new int[temperatures.length];
+
+        Deque<int[]> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < temperatures.length; i++) {
+            int currentTemp = temperatures[i];
+
+            while (!stack.isEmpty() && currentTemp > stack.peek()[0]) {
+                int[] pair = stack.pop();
+                result[pair[1]] = i - pair[1];
+            }
+            stack.push(new int[]{currentTemp, i});
+        }
+        return result;
+    }
+}
